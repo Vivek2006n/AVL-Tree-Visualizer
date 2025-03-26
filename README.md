@@ -41,15 +41,15 @@ The AVL Tree Visualizer is designed to help learners and developers understand h
 You can directly open the index.html file in your browser.
 Alternatively, run a local server:
 
-##Usage
+## Usage
 - Enter a Number: Type an integer into the input field.
 - Insert the Number: Click the "Insert" button to add the value to the AVL Tree.
 - Watch the Tree Update: The AVL Tree will adjust itself with the appropriate rotations, and you will see the changes reflected visually in real-time.
 
-##License
+## License
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
-Acknowledgments
+## Acknowledgments
 - D3.js: For enabling powerful data visualizations.
 - Inspiration from various AVL Tree implementations and educational resources in computer science.
 - Thanks to the open-source community for sharing insights and examples.
