@@ -1,0 +1,102 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 20px;
+    margin-top: 20px;
+    font-size: 3rem;
+    color: #333;
+}
+
+#controls {
+    margin: 20px;
+}
+
+input,
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+button {
+    background-color: #3b82f6;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #2563eb;
+}
+
+svg {
+    border: 3px solid;
+    border-image: linear-gradient(45deg, #ff6ec4, #7873f5, #3b82f6, #ff6ec4) 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.node circle {
+    fill: #fff;
+    stroke: #3b82f6;
+    stroke-width: 3px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.node circle:hover {
+    fill: #e0efff;
+    stroke: #2563eb;
+    transform: scale(1.1);
+}
+
+.node text {
+    font: 14px sans-serif;
+    fill: #333;
+    pointer-events: none;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+    opacity: 0.8;
+    transition: stroke 0.3s ease;
+}
+
+.link:hover {
+    stroke: #3b82f6;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 6px 10px;
+    font: 12px sans-serif;
+    background: rgba(59, 130, 246, 0.9);
+    color: white;
+    border: 1px solid #2563eb;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
