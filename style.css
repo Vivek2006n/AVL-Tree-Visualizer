@@ -1,20 +1,56 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    background-attachment: fixed;
+}
+
+body.dark-mode {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: white;
+}
+
+body.dark-mode h1 {
+    color: white;
+}
+
+body.dark-mode input,
+body.dark-mode button {
+    background-color: #475569;
+    color: white;
+    border-color: #64748b;
+}
+
+body.dark-mode svg {
+    background: #1e293b;
+    border-color: #64748b;
+}
+
+body.dark-mode .node circle {
+    stroke: #94a3b8;
+}
+
+body.dark-mode .link {
+    stroke: #94a3b8;
 }
 
 h1 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
     margin-top: 20px;
-    margin-top: 20px;
-    font-size: 3rem;
-    color: #333;
+    font-size: 2.5rem;
+    color: #000;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
 #controls {
@@ -47,6 +83,15 @@ button:hover {
     background-color: #2563eb;
 }
 
+button#resetBtn {
+    background-color: #f87171;
+    margin-left: 10px;
+}
+
+button#resetBtn:hover {
+    background-color: #ef4444;
+}
+
 svg {
     border: 3px solid;
     border-image: linear-gradient(45deg, #ff6ec4, #7873f5, #3b82f6, #ff6ec4) 1;
@@ -64,9 +109,10 @@ svg {
 }
 
 .node circle:hover {
-    fill: #e0efff;
-    stroke: #2563eb;
-    transform: scale(1.1);
+    fill: #ffedd5;
+    stroke: #f97316;
+    transform: scale(1.2);
+    transition: all 0.3s ease;
 }
 
 .node text {
@@ -99,4 +145,24 @@ svg {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
+}
+
+#visualizer {
+    margin-top: 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
+
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    background: #f3f4f6;
+    border-top: 1px solid #ddd;
+    width: 100%;
 }
