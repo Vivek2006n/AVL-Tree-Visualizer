@@ -59,10 +59,10 @@ class AVLTree {
             node.right = this.insertNode(node.right, value);
         } else {
             console.log(`Duplicate value "${value}" not allowed in AVL Tree.`);
-            return node; // Return unchanged node if duplicate is found
+            return node;
         }
 
-        // Update height 
+
         node.height = 1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
 
         // Get balance factor
@@ -84,6 +84,61 @@ class AVLTree {
 
     insert(value) {
         this.root = this.insertNode(this.root, value);
+    }
+
+    deleteNode(node, value) {
+        if (!node) return node;
+
+        // BST delete
+        if (value < node.value) {
+            node.left = this.deleteNode(node.left, value);
+        } else if (value > node.value) {
+            node.right = this.deleteNode(node.right, value);
+        } else {
+
+            if (!node.left || !node.right) {
+                node = node.left || node.right;
+            } else {
+
+                const temp = this.getMinValueNode(node.right);
+                node.value = temp.value;
+                node.right = this.deleteNode(node.right, temp.value);
+            }
+        }
+
+        if (!node) return node;
+
+
+        node.height = 1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
+
+
+        const balance = this.getBalance(node);
+
+
+        if (balance > 1 && this.getBalance(node.left) >= 0) return this.rightRotate(node); // LL Case
+        if (balance > 1 && this.getBalance(node.left) < 0) {                               // LR Case
+            node.left = this.leftRotate(node.left);
+            return this.rightRotate(node);
+        }
+        if (balance < -1 && this.getBalance(node.right) <= 0) return this.leftRotate(node); // RR Case
+        if (balance < -1 && this.getBalance(node.right) > 0) {                              // RL Case
+            node.right = this.rightRotate(node.right);
+            return this.leftRotate(node);
+        }
+
+        return node;
+    }
+
+    getMinValueNode(node) {
+        let current = node;
+        while (current.left) {
+            current = current.left;
+        }
+        return current;
+    }
+
+    delete(value) {
+        this.root = this.deleteNode(this.root, value);
     }
 
     toJSON() {
@@ -134,22 +189,29 @@ function update(source) {
         .data(root.descendants(), d => d.data.name + "_" + d.depth);
 
 
+    function showTooltip(event, text) {
+        tooltip.transition().duration(200).style("opacity", 0.9);
+        tooltip.html(text)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 28) + "px");
+    }
+
+    function moveTooltip(event) {
+        tooltip.style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 28) + "px");
+    }
+
+    function hideTooltip() {
+        tooltip.transition().duration(200).style("opacity", 0);
+    }
+
+
     const nodeEnter = nodes.enter().append("g")
         .attr("class", "node")
         .attr("transform", d => `translate(${d.x},${d.y})`)
-        .on("mouseover", (event, d) => {
-            tooltip.transition().duration(200).style("opacity", 0.9);
-            tooltip.html("Balance Factor: " + d.data.balance)
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mousemove", (event) => {
-            tooltip.style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", () => {
-            tooltip.transition().duration(200).style("opacity", 0);
-        });
+        .on("mouseover", (event, d) => showTooltip(event, "Balance Factor: " + d.data.balance))
+        .on("mousemove", moveTooltip)
+        .on("mouseout", hideTooltip);
 
     nodeEnter.append("circle")
         .attr("r", 20);
@@ -191,18 +253,32 @@ function update(source) {
 }
 
 //USER INTERACTION 
-document.getElementById("insertBtn").addEventListener("click", function () {
+function handleTreeOperation(operation) {
     const input = document.getElementById("numberInput");
     const value = parseInt(input.value);
     if (!isNaN(value)) {
-        avl.insert(value);
+        if (operation === "insert") avl.insert(value);
+        else if (operation === "delete") avl.delete(value);
         update(avl.toJSON());
         input.value = "";
     }
-});
+}
+
+document.getElementById("insertBtn").addEventListener("click", () => handleTreeOperation("insert"));
+document.getElementById("deleteBtn").addEventListener("click", () => handleTreeOperation("delete"));
 
 document.getElementById("numberInput").addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         document.getElementById("insertBtn").click();
     }
+});
+
+// Reset tree 
+document.getElementById("resetBtn").addEventListener("click", function () {
+    avl.root = null;
+    g.selectAll("*").remove();
+});
+
+document.getElementById("darkModeToggle").addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
 });
